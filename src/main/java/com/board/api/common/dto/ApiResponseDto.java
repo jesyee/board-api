@@ -8,12 +8,16 @@ import java.util.List;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
 public class ApiResponseDto implements Serializable {
     private String code;
     private String message;
     private Object data;
+
+    public ApiResponseDto() {
+        this.code = "000000";
+        this.message = "";
+    }
 
     public ApiResponseDto (CommonException e) {
         this.code = e.getErrorCode();
@@ -21,17 +25,6 @@ public class ApiResponseDto implements Serializable {
     }
 
     public ApiResponseDto (Object object) {
-        setSuccess();
         this.data = object;
-    }
-
-    public ApiResponseDto (List<Object> listObject) {
-        setSuccess();
-        this.data = listObject;
-    }
-
-    private void setSuccess() {
-        this.code = "000000";
-        this.message = "";
     }
 }

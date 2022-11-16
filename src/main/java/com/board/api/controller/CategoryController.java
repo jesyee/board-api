@@ -1,14 +1,12 @@
 package com.board.api.controller;
 
-import com.board.api.controller.dto.CategoryResponseDto;
+import com.board.api.common.dto.ApiResponseDto;
 import com.board.api.controller.dto.CategorySaveRequestDto;
 import com.board.api.controller.dto.CategoryUpdateRequestDto;
 import com.board.api.service.CategoryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-
 
 @RestController
 @RequiredArgsConstructor
@@ -22,8 +20,8 @@ public class CategoryController {
      * @throws Exception
      */
     @GetMapping("/category/{categoryId}")
-    public CategoryResponseDto findCategory(@PathVariable("categoryId") String categoryId) throws Exception {
-        return categoryService.findCategory(categoryId);
+    public ResponseEntity<?> findCategory(@PathVariable("categoryId") String categoryId) throws Exception {
+        return ResponseEntity.ok(new ApiResponseDto(categoryService.findCategory(categoryId)));
     }
 
     /**
@@ -32,8 +30,8 @@ public class CategoryController {
      * @throws Exception
      */
     @GetMapping("/category/list")
-    public List<CategoryResponseDto> findCategoryList() throws Exception {
-        return categoryService.findCategoryList();
+    public ResponseEntity<?> findCategoryList() throws Exception {
+        return ResponseEntity.ok(new ApiResponseDto(categoryService.findCategoryList()));
     }
 
     /**
@@ -41,8 +39,9 @@ public class CategoryController {
      * @param saveRequestDto
      */
     @PostMapping("/category")
-    public void saveCategory(@RequestBody CategorySaveRequestDto saveRequestDto) {
+    public ResponseEntity<?> saveCategory(@RequestBody CategorySaveRequestDto saveRequestDto) {
         categoryService.saveCategory(saveRequestDto);
+        return ResponseEntity.ok(new ApiResponseDto());
     }
 
     /**
@@ -50,9 +49,9 @@ public class CategoryController {
      * @param updateRequestDto
      */
     @PutMapping("/category")
-    public void updateCategory(@RequestBody CategoryUpdateRequestDto updateRequestDto) {
+    public ResponseEntity<?> updateCategory(@RequestBody CategoryUpdateRequestDto updateRequestDto) {
         categoryService.updateCategory(updateRequestDto);
-
+        return ResponseEntity.ok(new ApiResponseDto());
     }
 
     /**
@@ -60,7 +59,9 @@ public class CategoryController {
      * @param categoryId
      */
     @DeleteMapping("/category/{categoryId}")
-    public void deleteCategory(@PathVariable("categoryId") String categoryId) {
+    public ResponseEntity<?> deleteCategory(@PathVariable("categoryId") String categoryId) {
         categoryService.deleteCategory(categoryId);
+
+        return ResponseEntity.ok(new ApiResponseDto());
     }
 }

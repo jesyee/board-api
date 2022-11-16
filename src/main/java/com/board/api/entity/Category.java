@@ -35,4 +35,14 @@ public class Category implements Serializable {
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime regDate;
+
+    public void updateData(CategoryUpdateRequestDto updateRequestDto) {
+        this.code = updateRequestDto.getCode();
+        this.name = updateRequestDto.getName();
+        this.useYn = updateRequestDto.getUseYn();
+    }
+
+    public void deleteData() {
+        this.useYn = false;
+    }
 }

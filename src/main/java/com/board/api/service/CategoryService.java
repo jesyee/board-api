@@ -13,6 +13,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -30,8 +31,7 @@ public class CategoryService {
                 .orElseThrow(() -> new CommonException(CommonExceptionCode.NO_DATA));
 
         // Category category를 CategoryResponseDto 타입으로 변환하기
-        CategoryResponseDto resultDto = new CategoryResponseDto();
-
+        CategoryResponseDto resultDto = new CategoryResponseDto(category);
 
         return resultDto;
     }
@@ -49,9 +49,7 @@ public class CategoryService {
         }
 
         // List<Category> categoryList 를 List<CategoryResponseDto>로 변환하기
-        List<CategoryResponseDto> resultList = new ArrayList<>();
-
-        return resultList;
+        return categoryList.stream().map(CategoryResponseDto::new).collect(Collectors.toList());
     }
 
     /**
@@ -60,6 +58,11 @@ public class CategoryService {
      */
     public void saveCategory(CategorySaveRequestDto saveRequestDto) {
         // 데이터 등록 로직 채우기
+        Category category = Category.builder()
+                .code(saveRequestDto.getCode())
+                .name(saveRequestDto.getName())
+                .useYn(saveRequestDto.getUseYn())
+                .build();
 
         categoryRepository.save(category);
     }
@@ -73,6 +76,7 @@ public class CategoryService {
                 .orElseThrow(() -> new CommonException(CommonExceptionCode.NO_DATA));
 
         // 데이터 update 로직 채우기
+        category.updateData(updateRequestDto);
 
         categoryRepository.save(category);
     }
@@ -86,6 +90,7 @@ public class CategoryService {
                 .orElseThrow(() -> new CommonException(CommonExceptionCode.NO_DATA));
 
         // 데이터 삭제 로직 채우기
+        category.deleteData();
 
         categoryRepository.save(category);
     }
