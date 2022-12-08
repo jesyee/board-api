@@ -1,8 +1,7 @@
 package com.board.api.entity;
 
-import com.board.api.controller.dto.CategoryUpdateRequestDto;
+import com.board.api.controller.dto.CommentUpdateRequestDto;
 import lombok.*;
-import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -17,31 +16,24 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(catalog = "board", name = "category")
-public class Category implements Serializable {
+@Table(catalog = "board", name = "comment")
+public class Comment implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long categoryId;
+    private Long commentId;
 
-    @Size(max = 10)
-    private String code;
+    @Size(max = 200)
+    private String comment;
 
-    @Size(max = 50)
-    private String name;
+    private Long postId;
 
-    @Type(type = "yes_no")
-    private Boolean useYn;
+    private Long memberId;
 
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime regDate;
 
-    public void updateData(CategoryUpdateRequestDto updateRequestDto) {
-        this.code = updateRequestDto.getCode();
-        this.name = updateRequestDto.getName();
-    }
-
-    public void deleteData() {
-        this.useYn = false;
+    public void updateData(CommentUpdateRequestDto updateDto) {
+        this.comment = updateDto.getComment();
     }
 }

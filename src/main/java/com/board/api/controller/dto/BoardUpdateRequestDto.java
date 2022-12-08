@@ -7,8 +7,8 @@ import java.io.Serializable;
 
 @Getter
 @Setter
-public class CategoryUpdateRequestDto implements Serializable {
+public class BoardUpdateRequestDto implements Serializable {
+    private Long boardId;
+    private String subject;
     private Long categoryId;
-    private String code;
-    private String name;
 }

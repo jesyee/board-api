@@ -14,18 +14,18 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     /**
-     * 게시판 카테고리 조회 - 단건 *
+     * 게시판 카테고리 조회 *
      * @param categoryId
      * @return
      * @throws Exception
      */
     @GetMapping("/category/{categoryId}")
-    public ResponseEntity<?> findCategory(@PathVariable("categoryId") String categoryId) throws Exception {
+    public ResponseEntity<?> findCategory(@PathVariable("categoryId") Long categoryId) throws Exception {
         return ResponseEntity.ok(new ApiResponseDto(categoryService.findCategory(categoryId)));
     }
 
     /**
-     * 게시판 카테고리 조회 - 리스트 *
+     * 게시판 카테고리 목록 조회 *
      * @return
      * @throws Exception
      */

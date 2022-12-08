@@ -7,13 +7,12 @@ import java.io.Serializable;
 
 @Getter
 @Setter
-public class CategorySaveRequestDto implements Serializable {
-    private String code;
-    private String name;
+public class BoardSaveRequestDto implements Serializable {
+    private String subject;
+    private Long categoryId;
     private Boolean useYn;
 
-    public CategorySaveRequestDto() {
-        this.code = "FREE";
+    public BoardSaveRequestDto() {
         this.useYn = true;
 
     }

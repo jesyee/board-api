@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,11 +25,10 @@ public class CategoryService {
      * @return
      * @throws Exception
      */
-    public CategoryResponseDto findCategory(String categoryId) throws Exception {
-        Category category = categoryRepository.findByCategoryId(Long.parseLong(categoryId))
+    public CategoryResponseDto findCategory(Long categoryId) throws Exception {
+        Category category = categoryRepository.findByCategoryId(categoryId)
                 .orElseThrow(() -> new CommonException(CommonExceptionCode.NO_DATA));
 
-        // Category category를 CategoryResponseDto 타입으로 변환하기
         CategoryResponseDto resultDto = new CategoryResponseDto(category);
 
         return resultDto;
@@ -48,7 +46,6 @@ public class CategoryService {
             throw new CommonException(CommonExceptionCode.NO_DATA);
         }
 
-        // List<Category> categoryList 를 List<CategoryResponseDto>로 변환하기
         return categoryList.stream().map(CategoryResponseDto::new).collect(Collectors.toList());
     }
 
